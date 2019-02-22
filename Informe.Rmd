@@ -1,6 +1,6 @@
 ---
 title: "Informe"
-author: "Julio Francisco Barahona Martínez"
+author: "Julio Francisco Barahona Martínez / jroge suc "
 date: "February 21, 2019"
 output: html_document
 ---
