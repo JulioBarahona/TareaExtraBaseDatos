@@ -18,3 +18,4 @@ vignettes/*.pdf
 # Database 
 .db
 *.db
+.Rproj.user
