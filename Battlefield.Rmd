@@ -35,16 +35,100 @@ kable(tablas ,col.names = "Tablas en Base de datos")
 
 ### Query #6
 ¿Cuál es la probabilidad de que un vuelo de cierta aerolínea llegue retrasado? <br /> Para esta pregunta se tiene que hacer una serie de pasos:
-1. Agrupar las aerolineas que tuvieron algun retraso al salir.  <br />
+1. Obtener las las aerolineas que tuvieron algun retraso al salir.  <br />
 2. De las aerolineas obtenidas observar el numero de vuelos retrasados versus el numero de vuelos realizados en total.  <br />
 3. Presentar el porcentaje de retraso en un nueva columna asociada con el nombre de la aereolinea.  <br />
 ```{r query6, message=FALSE, warning=FALSE}
 sql <- paste0("
-  SELECT DISTINCT DOT_ID_Reporting_Airline
+  SELECT DOT_ID_Reporting_Airline, depdelay
   FROM ontime
-  WHERE (depdelay > 10)
-  GROUP BY DOT_ID_Reporting_Airline
-  ")
+  WHERE DOT_ID_Reporting_Airline IN (
+    SELECT DOT_ID_Reporting_Airline, depdelay
+    FROM ontime
+    WHERE (DepDelayMinutes > 10))")
+
+res <- dbSendQuery(db, sql)
+as.data.frame(dbFetch(res))
+```
+
+### Query #7
+¿Cuál es la probabilidad de que un vuelo llegue a tiempo a su destino? <br /> 
+Para esta pregunta se tiene que hacer una serie de pasos: <br />
+1. Obtener el numero de vuelos con restraso menor a 0.  <br />
+2. Agrupar por aerolinea.  <br />
+3. Dividir en SELECT los positivos versus los negativos.  <br />
+```{r query7, message=FALSE, warning=FALSE}
+sql <- paste0("
+    SELECT DOT_ID_Reporting_Airline, ArrDelayMinutes
+    FROM ontime
+    WHERE (ArrDelayMinutes > 10)")
+
+res <- dbSendQuery(db, sql)
+as.data.frame(dbFetch(res))
+```
+
+
+### Query #8
+¿Cuál es la aerolínea que más  millas ha volado? <br /> 
+Para esta pregunta se tiene que hacer una serie de pasos: <br />
+1. Obtener el numero de vuelos con restraso menor a 0.  <br />
+2. Agrupar por aerolinea.  <br />
+3. Dividir en SELECT los positivos versus los negativos.  <br />
+```{r query7, message=FALSE, warning=FALSE}
+sql <- paste0("
+    SELECT DOT_ID_Reporting_Airline, ArrDelayMinutes
+    FROM ontime
+    WHERE (ArrDelayMinutes > 10)")
+
+res <- dbSendQuery(db, sql)
+as.data.frame(dbFetch(res))
+```
+
+
+### Query #9
+¿Cual es la que tiene menor reporte de accidentes? <br /> 
+Para esta pregunta se tiene que hacer una serie de pasos: <br />
+1. Obtener el numero de vuelos con restraso menor a 0.  <br />
+2. Agrupar por aerolinea.  <br />
+3. Dividir en SELECT los positivos versus los negativos.  <br />
+```{r query7, message=FALSE, warning=FALSE}
+sql <- paste0("
+    SELECT DOT_ID_Reporting_Airline, ArrDelayMinutes
+    FROM ontime
+    WHERE (ArrDelayMinutes > 10)")
+
+res <- dbSendQuery(db, sql)
+as.data.frame(dbFetch(res))
+```
+
+
+### Query #10
+¿Qué aerolínea sale los fines de semana? <br /> 
+Para esta pregunta se tiene que hacer una serie de pasos: <br />
+1. Obtener el numero de vuelos con restraso menor a 0.  <br />
+2. Agrupar por aerolinea.  <br />
+3. Dividir en SELECT los positivos versus los negativos.  <br />
+```{r query7, message=FALSE, warning=FALSE}
+sql <- paste0("
+    SELECT DOT_ID_Reporting_Airline, ArrDelayMinutes
+    FROM ontime
+    WHERE (ArrDelayMinutes > 10)")
+
+res <- dbSendQuery(db, sql)
+as.data.frame(dbFetch(res))
+```
+
+### Query #11
+¿qué aerolínea tiene más personas que confían en ella? <br /> 
+Para esta pregunta se tiene que hacer una serie de pasos: <br />
+1. Obtener el numero de vuelos con restraso menor a 0.  <br />
+2. Agrupar por aerolinea.  <br />
+3. Dividir en SELECT los positivos versus los negativos.  <br />
+```{r query7, message=FALSE, warning=FALSE}
+sql <- paste0("
+    SELECT DOT_ID_Reporting_Airline, ArrDelayMinutes
+    FROM ontime
+    WHERE (ArrDelayMinutes > 10)")
 
 res <- dbSendQuery(db, sql)
 as.data.frame(dbFetch(res))
@@ -54,11 +138,13 @@ as.data.frame(dbFetch(res))
 
 #### Mierda de suchite
 ```{r testingshit , message=FALSE, warning=FALSE}
-sql <- paste0("
-  SELECT count (*)
-  FROM airline_id")
-res <- dbSendQuery(db, sql)
-kable(as.data.frame(dbFetch(res)))
+kable(dbGetQuery(db, 
+  "
+  SELECT a.Description, COUNT(*) 
+  FROM ontime o INNER JOIN airline_id a ON  o.DOT_ID_Reporting_Airline = a.Code 
+  WHERE Diverted = 1 
+  GROUP BY DOT_ID_Reporting_Airline
+  " ))
 ```
 
 

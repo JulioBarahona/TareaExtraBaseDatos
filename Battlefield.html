@@ -258,29 +258,200 @@ yesno_resp
 </div>
 <div id="query-6" class="section level3">
 <h3>Query #6</h3>
-<p>¿Cuál es la probabilidad de que un vuelo de cierta aerolínea llegue retrasado? <br /> Para esta pregunta se tiene que hacer una serie de pasos: 1. Agrupar las aerolineas que tuvieron algun retraso al salir 2. De las aerolineas obtenidas observar el numero de vuelos retrasados versus el numero de vuelos realizados en total 3. Presentar el porcentaje de retraso en un nueva columna asociada con el nombre de la aereolinea</p>
+<p>¿Cuál es la probabilidad de que un vuelo de cierta aerolínea llegue retrasado? <br /> Para esta pregunta se tiene que hacer una serie de pasos: 1. Agrupar las aerolineas que tuvieron algun retraso al salir. <br /> 2. De las aerolineas obtenidas observar el numero de vuelos retrasados versus el numero de vuelos realizados en total. <br /> 3. Presentar el porcentaje de retraso en un nueva columna asociada con el nombre de la aereolinea. <br /></p>
 <pre class="r"><code>sql &lt;- paste0(&quot;
   SELECT DOT_ID_Reporting_Airline
   FROM ontime
   WHERE (depdelay &gt; 10)
-  LIMIT 10&quot;)
+  GROUP BY DOT_ID_Reporting_Airline
+  &quot;)
 
 res &lt;- dbSendQuery(db, sql)
 as.data.frame(dbFetch(res))</code></pre>
 <pre><code>##    DOT_ID_Reporting_Airline
-## 1                     20363
-## 2                     20363
-## 3                     20363
-## 4                     20363
-## 5                     20363
-## 6                     20363
-## 7                     20363
+## 1                     19393
+## 2                     19690
+## 3                     19790
+## 4                     19805
+## 5                     19930
+## 6                     19977
+## 7                     20304
 ## 8                     20363
-## 9                     20363
-## 10                    20363</code></pre>
+## 9                     20366
+## 10                    20368
+## 11                    20378
+## 12                    20397
+## 13                    20398
+## 14                    20409
+## 15                    20416
+## 16                    20436
+## 17                    20452
+## 18                    21171</code></pre>
 </div>
 <div id="query" class="section level3">
 <h3>Query</h3>
+<div id="mierda-de-suchite" class="section level4">
+<h4>Mierda de suchite</h4>
+<pre class="r"><code>kable(dbGetQuery(db, &quot;Select a.Description, COUNT(*) from ontime o INNER JOIN airline_id a ON  o.DOT_ID_Reporting_Airline = a.Code WHERE Diverted = 1 GROUP BY DOT_ID_Reporting_Airline&quot; ))</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Description
+</th>
+<th style="text-align:right;">
+COUNT(*)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Southwest Airlines Co.: WN
+</td>
+<td style="text-align:right;">
+4918
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hawaiian Airlines Inc.: HA
+</td>
+<td style="text-align:right;">
+176
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Delta Air Lines Inc.: DL
+</td>
+<td style="text-align:right;">
+3663
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+American Airlines Inc.: AA
+</td>
+<td style="text-align:right;">
+4173
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Alaska Airlines Inc.: AS
+</td>
+<td style="text-align:right;">
+1021
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+United Air Lines Inc.: UA
+</td>
+<td style="text-align:right;">
+2928
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SkyWest Airlines Inc.: OO
+</td>
+<td style="text-align:right;">
+4464
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Endeavor Air Inc.: 9E
+</td>
+<td style="text-align:right;">
+505
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ExpressJet Airlines Inc.: EV
+</td>
+<td style="text-align:right;">
+1595
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Allegiant Air: G4
+</td>
+<td style="text-align:right;">
+234
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mesa Airlines Inc.: YV
+</td>
+<td style="text-align:right;">
+474
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSA Airlines Inc.: OH
+</td>
+<td style="text-align:right;">
+751
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Envoy Air: MQ
+</td>
+<td style="text-align:right;">
+774
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JetBlue Airways: B6
+</td>
+<td style="text-align:right;">
+1471
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Spirit Air Lines: NK
+</td>
+<td style="text-align:right;">
+503
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Frontier Airlines Inc.: F9
+</td>
+<td style="text-align:right;">
+319
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Republic Airline: YX
+</td>
+<td style="text-align:right;">
+678
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Virgin America: VX
+</td>
+<td style="text-align:right;">
+326
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 
