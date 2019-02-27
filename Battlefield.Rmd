@@ -33,204 +33,30 @@ tablas <- as.data.frame(dbListTables(db))
 kable(tablas ,col.names = "Tablas en Base de datos") 
 ```
 
-### Tablas con sus contenidos
-Aca se presentan las tablas con  algunos de sus valores 
-
-#### Meses
-```{r months}
+### Query #6
+¿Cuál es la probabilidad de que un vuelo de cierta aerolínea llegue retrasado? <br /> Para esta pregunta se tiene que hacer una serie de pasos:
+1. Agrupar las aerolineas que tuvieron algun retraso al salir.  <br />
+2. De las aerolineas obtenidas observar el numero de vuelos retrasados versus el numero de vuelos realizados en total.  <br />
+3. Presentar el porcentaje de retraso en un nueva columna asociada con el nombre de la aereolinea.  <br />
+```{r query6, message=FALSE, warning=FALSE}
 sql <- paste0("
-  SELECT * 
-  FROM months
-  LIMIT 10")
-res <- dbSendQuery(db, sql)
-kable(as.data.frame(dbFetch(res)))
-```
-
-#### Aeropuertos
-```{r airport , message=FALSE, warning=FALSE}
-sql <- paste0("
-  SELECT * 
-  FROM airport
-  LIMIT 10")
-res <- dbSendQuery(db, sql)
-kable(as.data.frame(dbFetch(res)))
-```
-#### Identificadores de aeropuertos 
-```{r airport_id , message=FALSE, warning=FALSE}
-sql <- paste0("
-  SELECT * 
-  FROM airport_id
-  LIMIT 10")
-res <- dbSendQuery(db, sql)
-kable(as.data.frame(dbFetch(res)))
-```
-
-#### Identificadores de aerolineas 
-```{r airline_id , message=FALSE, warning=FALSE}
-sql <- paste0("
-  SELECT * 
-  FROM airline_id
-  LIMIT 10")
-res <- dbSendQuery(db, sql)
-kable(as.data.frame(dbFetch(res)))
-```
-
-#### Pendiente
-```{r airport_seq_id}
-sql <- paste0("
-  SELECT * 
-  FROM airport_seq_id
-  LIMIT 10")
-res <- dbSendQuery(db, sql)
-kable(as.data.frame(dbFetch(res)))
-```
-
-#### Pendiente
-```{r cancellation}
-sql <- paste0("
-  SELECT * 
-  FROM cancellation
-  LIMIT 10")
-res <- dbSendQuery(db, sql)
-kable(as.data.frame(dbFetch(res)))
-```
-
-#### Pendiente
-```{r carrier_history}
-sql <- paste0("
-  SELECT * 
-  FROM carrier_history
-  LIMIT 10")
-res <- dbSendQuery(db, sql)
-kable(as.data.frame(dbFetch(res)))
-```
-
-#### Pendiente
-```{r city_market_id}
-sql <- paste0("
-  SELECT * 
-  FROM city_market_id
-  LIMIT 10")
-res <- dbSendQuery(db, sql)
-kable(as.data.frame(dbFetch(res)))
-```
-
-#### Pendiente
-```{r deparrblk}
-sql <- paste0("
-  SELECT * 
-  FROM deparrblk
-  LIMIT 10")
-res <- dbSendQuery(db, sql)
-kable(as.data.frame(dbFetch(res)))
-```
-
-#### Pendiente
-```{r distance_group_250}
-sql <- paste0("
-  SELECT * 
-  FROM distance_group_250
-  LIMIT 10")
-res <- dbSendQuery(db, sql)
-kable(as.data.frame(dbFetch(res)))
-```
-
-#### Pendiente
-```{r diversions}
-sql <- paste0("
-  SELECT * 
-  FROM diversions
-  LIMIT 10")
-res <- dbSendQuery(db, sql)
-kable(as.data.frame(dbFetch(res)))
-```
-
-#### Pendiente
-```{r ontime}
-sql <- paste0("
-  SELECT * 
+  SELECT DISTINCT DOT_ID_Reporting_Airline
   FROM ontime
-  LIMIT 10")
+  WHERE (depdelay > 10)
+  GROUP BY DOT_ID_Reporting_Airline
+  ")
+
 res <- dbSendQuery(db, sql)
-kable(as.data.frame(dbFetch(res)))
+as.data.frame(dbFetch(res))
 ```
 
-#### Pendiente
-```{r ontime_delay_groups}
-sql <- paste0("
-  SELECT * 
-  FROM ontime_delay_groups
-  LIMIT 10")
-res <- dbSendQuery(db, sql)
-kable(as.data.frame(dbFetch(res)))
-```
+### Query 
 
-#### Pendiente
-```{r quarters}
+#### Mierda de suchite
+```{r testingshit , message=FALSE, warning=FALSE}
 sql <- paste0("
-  SELECT * 
-  FROM quarters
-  LIMIT 10")
-res <- dbSendQuery(db, sql)
-kable(as.data.frame(dbFetch(res)))
-```
-
-#### Pendiente
-```{r state_abr_aviation}
-sql <- paste0("
-  SELECT * 
-  FROM state_abr_aviation
-  LIMIT 10")
-res <- dbSendQuery(db, sql)
-kable(as.data.frame(dbFetch(res)))
-```
-
-#### Pendiente
-```{r state_fips}
-sql <- paste0("
-  SELECT * 
-  FROM state_fips
-  LIMIT 10")
-res <- dbSendQuery(db, sql)
-kable(as.data.frame(dbFetch(res)))
-```
-
-#### Pendiente
-```{r unique_carriers}
-sql <- paste0("
-  SELECT * 
-  FROM unique_carriers
-  LIMIT 10")
-res <- dbSendQuery(db, sql)
-kable(as.data.frame(dbFetch(res)))
-```
-
-#### Pendiente
-```{r weekdays}
-sql <- paste0("
-  SELECT * 
-  FROM weekdays
-  LIMIT 10")
-res <- dbSendQuery(db, sql)
-kable(as.data.frame(dbFetch(res)))
-```
-
-#### Pendiente
-```{r world_area_codes}
-sql <- paste0("
-  SELECT * 
-  FROM world_area_codes
-  LIMIT 10")
-res <- dbSendQuery(db, sql)
-kable(as.data.frame(dbFetch(res)))
-```
-
-#### Pendiente
-```{r yesno_resp}
-sql <- paste0("
-  SELECT * 
-  FROM yesno_resp
-  LIMIT 10")
+  SELECT count (*)
+  FROM airline_id")
 res <- dbSendQuery(db, sql)
 kable(as.data.frame(dbFetch(res)))
 ```
