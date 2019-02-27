@@ -1,0 +1,243 @@
+---
+title: "Informe #1"
+author: "Julio Francisco Barahona Martínez & Jorge Estuardo Suchite Martínez   "
+date: "February 21, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+if (!require("RSQLite"))    {install.packages("RSQLite");   library("RSQLite")}
+if (!require("DBI"))    {install.packages("DBI");   library("DBI")}
+if (!require("knitr"))    {install.packages("knitr");   library("knitr")}
+if (!require("tables"))    {install.packages("tables");   library("tables")}
+if (!require("kableExtra"))    {install.packages("kableExtra");   library("kableExtra")}
+```
+## Enfoque
+
+En este documento se pretende encontrar,  mediante queries SQL, la aerolinea con mejor desempeño. El desempeño se . La [base de datos](https://www.transtats.bts.gov/DatabaseInfo.asp?DB_ID=120) fue proveida por el catedratico Bidkar Pojoy. 
+
+### Analisis preliminar 
+
+La base de datos completa es muy grande para ser procesada en su totalidad, es por esto que se redujeron los campos (columnas). Debio a esto se tiene que hacer un analisis rápido de las tablas y tuplas en la nueva base de datos acotada. 
+
+```{r tablas, warning=FALSE}
+#Nombre de base de datos
+filename <- "ontime.db"
+
+#Modulo para poder utilizar RSQLite
+sqlite <- dbDriver("SQLite")
+
+db <- dbConnect (sqlite,dbname= filename)
+tablas <- as.data.frame(dbListTables(db))
+kable(tablas ,col.names = "Tablas en Base de datos") 
+```
+
+### Tablas con sus contenidos
+Aca se presentan las tablas con  algunos de sus valores 
+
+#### Meses
+```{r months}
+sql <- paste0("
+  SELECT * 
+  FROM months
+  LIMIT 10")
+res <- dbSendQuery(db, sql)
+kable(as.data.frame(dbFetch(res)))
+```
+
+#### Aeropuertos
+```{r airport , message=FALSE, warning=FALSE}
+sql <- paste0("
+  SELECT * 
+  FROM airport
+  LIMIT 10")
+res <- dbSendQuery(db, sql)
+kable(as.data.frame(dbFetch(res)))
+```
+#### Identificadores de aeropuertos 
+```{r airport_id , message=FALSE, warning=FALSE}
+sql <- paste0("
+  SELECT * 
+  FROM airport_id
+  LIMIT 10")
+res <- dbSendQuery(db, sql)
+kable(as.data.frame(dbFetch(res)))
+```
+
+#### Identificadores de aerolineas 
+```{r airline_id , message=FALSE, warning=FALSE}
+sql <- paste0("
+  SELECT * 
+  FROM airline_id
+  LIMIT 10")
+res <- dbSendQuery(db, sql)
+kable(as.data.frame(dbFetch(res)))
+```
+
+#### Pendiente
+```{r airport_seq_id}
+sql <- paste0("
+  SELECT * 
+  FROM airport_seq_id
+  LIMIT 10")
+res <- dbSendQuery(db, sql)
+kable(as.data.frame(dbFetch(res)))
+```
+
+#### Pendiente
+```{r cancellation}
+sql <- paste0("
+  SELECT * 
+  FROM cancellation
+  LIMIT 10")
+res <- dbSendQuery(db, sql)
+kable(as.data.frame(dbFetch(res)))
+```
+
+#### Pendiente
+```{r carrier_history}
+sql <- paste0("
+  SELECT * 
+  FROM carrier_history
+  LIMIT 10")
+res <- dbSendQuery(db, sql)
+kable(as.data.frame(dbFetch(res)))
+```
+
+#### Pendiente
+```{r city_market_id}
+sql <- paste0("
+  SELECT * 
+  FROM city_market_id
+  LIMIT 10")
+res <- dbSendQuery(db, sql)
+kable(as.data.frame(dbFetch(res)))
+```
+
+#### Pendiente
+```{r deparrblk}
+sql <- paste0("
+  SELECT * 
+  FROM deparrblk
+  LIMIT 10")
+res <- dbSendQuery(db, sql)
+kable(as.data.frame(dbFetch(res)))
+```
+
+#### Pendiente
+```{r distance_group_250}
+sql <- paste0("
+  SELECT * 
+  FROM distance_group_250
+  LIMIT 10")
+res <- dbSendQuery(db, sql)
+kable(as.data.frame(dbFetch(res)))
+```
+
+#### Pendiente
+```{r diversions}
+sql <- paste0("
+  SELECT * 
+  FROM diversions
+  LIMIT 10")
+res <- dbSendQuery(db, sql)
+kable(as.data.frame(dbFetch(res)))
+```
+
+#### Pendiente
+```{r ontime}
+sql <- paste0("
+  SELECT * 
+  FROM ontime
+  LIMIT 10")
+res <- dbSendQuery(db, sql)
+kable(as.data.frame(dbFetch(res)))
+```
+
+#### Pendiente
+```{r ontime_delay_groups}
+sql <- paste0("
+  SELECT * 
+  FROM ontime_delay_groups
+  LIMIT 10")
+res <- dbSendQuery(db, sql)
+kable(as.data.frame(dbFetch(res)))
+```
+
+#### Pendiente
+```{r quarters}
+sql <- paste0("
+  SELECT * 
+  FROM quarters
+  LIMIT 10")
+res <- dbSendQuery(db, sql)
+kable(as.data.frame(dbFetch(res)))
+```
+
+#### Pendiente
+```{r state_abr_aviation}
+sql <- paste0("
+  SELECT * 
+  FROM state_abr_aviation
+  LIMIT 10")
+res <- dbSendQuery(db, sql)
+kable(as.data.frame(dbFetch(res)))
+```
+
+#### Pendiente
+```{r state_fips}
+sql <- paste0("
+  SELECT * 
+  FROM state_fips
+  LIMIT 10")
+res <- dbSendQuery(db, sql)
+kable(as.data.frame(dbFetch(res)))
+```
+
+#### Pendiente
+```{r unique_carriers}
+sql <- paste0("
+  SELECT * 
+  FROM unique_carriers
+  LIMIT 10")
+res <- dbSendQuery(db, sql)
+kable(as.data.frame(dbFetch(res)))
+```
+
+#### Pendiente
+```{r weekdays}
+sql <- paste0("
+  SELECT * 
+  FROM weekdays
+  LIMIT 10")
+res <- dbSendQuery(db, sql)
+kable(as.data.frame(dbFetch(res)))
+```
+
+#### Pendiente
+```{r world_area_codes}
+sql <- paste0("
+  SELECT * 
+  FROM world_area_codes
+  LIMIT 10")
+res <- dbSendQuery(db, sql)
+kable(as.data.frame(dbFetch(res)))
+```
+
+#### Pendiente
+```{r yesno_resp}
+sql <- paste0("
+  SELECT * 
+  FROM yesno_resp
+  LIMIT 10")
+res <- dbSendQuery(db, sql)
+kable(as.data.frame(dbFetch(res)))
+```
+
+
+```{r dbDisconnect, include=FALSE}
+#Fucion para no saturar la base de datos ni el kernel
+dbDisconnect(db)
+```
+
