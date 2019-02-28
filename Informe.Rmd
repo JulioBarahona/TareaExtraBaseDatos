@@ -235,9 +235,127 @@ res <- dbSendQuery(db, sql)
 kable(as.data.frame(dbFetch(res)))
 ```
 
+```{r}
+
+dbReadTable(db,"Cancellation" )
+
+
+dbListTables(db,"ontime")
+
+
+
+dbGetQuery(db, "SELECT * from ontime limit 10 ")
+
+dbGetQuery(db, "Select a.Description, COUNT(*) from ontime o INNER JOIN cancellation c ON o.Cancellationcode = c.code INNER JOIN airline_id a ON o.DOT_ID_Reporting_Airline = a.Code WHERE c.Description = 'Security'  GROUP BY o.DOT_ID_Reporting_Airline " )
+
+
+dbGetQuery(db, "Select a.Description, COUNT(*) from ontime o INNER JOIN airline_id a ON  o.DOT_ID_Reporting_Airline = a.Code WHERE Diverted = 1 GROUP BY DOT_ID_Reporting_Airline" )
+
+dbGetQuery(db, "Select a.Description, COUNT(*), odl.Description from ontime o INNER JOIN ontime_delay_groups odl ON o.DepDelay = odl.Code INNER JOIN airline_id a ON  o.DOT_ID_Reporting_Airline = a.Code WHERE odl.code in (-1,-2) GROUP BY DOT_ID_Reporting_Airline " )
+dbGetQuery(db, "Select a.Description, COUNT(*), odl.Description from ontime o INNER JOIN ontime_delay_groups odl ON o.ArrDelay = odl.Code INNER JOIN airline_id a ON  o.DOT_ID_Reporting_Airline = a.Code WHERE odl.code in (-1,-2) GROUP BY DOT_ID_Reporting_Airline " )
+
+```
+
+
+
+### Query #6
+¿Cuál es la probabilidad de que un vuelo de cierta aerolínea llegue retrasado? <br /> Para esta pregunta se tiene que hacer una serie de pasos:
+1. Obtener las las aerolineas que tuvieron algun retraso al salir.  <br />
+2. De las aerolineas obtenidas observar el numero de vuelos retrasados versus el numero de vuelos realizados en total.  <br />
+3. Presentar el porcentaje de retraso en un nueva columna asociada con el nombre de la aereolinea.  <br />
+```{r query6, message=FALSE, warning=FALSE}
+sql <- paste0("
+SELECT o1.DOT_ID_Reporting_Airline, late , count(*) as total
+FROM (ontime o INNER JOIN airline_id a ON  o.DOT_ID_Reporting_Airline = a.Code)   AS o1 JOIN (    
+  SELECT DOT_ID_Reporting_Airline, count(*) as late
+  FROM ontime o INNER JOIN airline_id a ON  o.DOT_ID_Reporting_Airline = a.Code
+  WHERE (DepDelayMinutes > 5)
+  GROUP BY DOT_ID_Reporting_Airline) AS o2 ON o1.DOT_ID_Reporting_Airline = o2.DOT_ID_Reporting_Airline
+GROUP BY o1.DOT_ID_Reporting_Airline
+LIMIT 5 
+  ")
+res <- dbSendQuery(db, sql)
+as.data.frame(dbFetch(res))
+```
+### Query #7
+¿Cuál es la aerolínea que más  millas ha volado? <br /> 
+Para esta pregunta se tiene que hacer una serie de pasos: <br />
+1. Agrupar por aerolinea.  <br />
+2. Hacer una sumatoria del campo 'Distance'.  <br />
+3. Renombrar el campo para que sea legible.  <br />
+4. Ordenar en orde descendiente ya que se quiere saber cuales son las mas recorridas. <br />
+```{r query7, message=FALSE, warning=FALSE}
+sql <- paste0("
+    SELECT Description, SUM(Distance) AS recorridoTotal
+    FROM ontime o INNER JOIN airline_id a ON  o.DOT_ID_Reporting_Airline = a.Code
+    GROUP BY DOT_ID_Reporting_Airline
+    ORDER BY recorridoTotal DESC
+    LIMIT 5
+        ")
+res <- dbSendQuery(db, sql)
+as.data.frame(dbFetch(res))
+```
+
+
+### Query #8
+¿Cual es la que tiene menor reporte de accidentes? <br /> 
+Para esta pregunta se tiene que hacer una serie de pasos: <br />
+1. Obtener el numero de vuelos con restraso menor a 0.  <br />
+2. Agrupar por aerolinea.  <br />
+3. Dividir en SELECT los positivos versus los negativos.  <br />
+```{r query8, message=FALSE, warning=FALSE}
+sql <- paste0("
+    SELECT DOT_ID_Reporting_Airline, ArrDelayMinutes
+    FROM ontime o INNER JOIN airline_id a ON  o.DOT_ID_Reporting_Airline = a.Code
+    WHERE (ArrDelayMinutes > 10)")
+
+sql <- paste0("
+    SELECT *
+    FROM cancellation")
+
+res <- dbSendQuery(db, sql)
+as.data.frame(dbFetch(res))
+```
+
+
+### Query #9
+¿Qué aerolínea sale los fines de semana? <br /> 
+Para esta pregunta se tiene que hacer una serie de pasos: <br />
+1. Obtener que aerolineas tienen codigo que que sea tanto de viernes, sabado o domingo.  <br />
+2. Hacer un merge Agrupar por aerolinea.  <br />
+3. Dividir en SELECT los positivos versus los negativos.  <br />
+```{r query9, message=FALSE, warning=FALSE}
+sql <- paste0("
+  SELECT DISTINCT a.Description
+  FROM (
+    SELECT DOT_ID_Reporting_Airline , DayOfWeek
+    FROM ontime
+    WHERE (DayOfWeek = 6 OR DayOfWeek = 7)) o INNER JOIN airline_id a ON o.DOT_ID_Reporting_Airline = a.Code
+  LIMIT 5
+")
+res <- dbSendQuery(db, sql)
+as.data.frame(dbFetch(res))
+```
+
+### Query #11
+¿qué día es donde se reportan más vuelos por aerolínea más óptima?
+Para esta pregunta se tiene que hacer una serie de pasos: <br />
+1. Agrupar los vuelos por aereoliea y por dia de la semana.  <br />
+2. Agrupar por aerolinea.  <br />
+3. Dividir en SELECT los positivos versus los negativos.  <br />
+```{r query11, message=FALSE, warning=FALSE}
+sql <- paste0("
+    SELECT Description, count(*) AS `vuelos`, DayOfWeek
+    FROM ontime o INNER JOIN airline_id a ON  o.DOT_ID_Reporting_Airline = a.Code
+    GROUP BY DOT_ID_Reporting_Airline
+    LIMIT 5
+    ")
+
+res <- dbSendQuery(db, sql)
+as.data.frame(dbFetch(res))
+```
 
 ```{r dbDisconnect, include=FALSE}
 #Fucion para no saturar la base de datos ni el kernel
 dbDisconnect(db)
 ```
-

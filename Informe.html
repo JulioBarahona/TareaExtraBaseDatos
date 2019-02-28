@@ -5155,7 +5155,450 @@ Yes
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>dbReadTable(db,&quot;Cancellation&quot; )</code></pre>
+<pre><code>## Warning: Closing open result set, pending rows</code></pre>
+<pre><code>##   Code         Description
+## 1    A             Carrier
+## 2    B             Weather
+## 3    C National Air System
+## 4    D            Security</code></pre>
+<pre class="r"><code>dbListTables(db,&quot;ontime&quot;)</code></pre>
+<pre><code>##  [1] &quot;airline_id&quot;          &quot;airport&quot;             &quot;airport_id&quot;         
+##  [4] &quot;airport_seq_id&quot;      &quot;cancellation&quot;        &quot;carrier_history&quot;    
+##  [7] &quot;city_market_id&quot;      &quot;deparrblk&quot;           &quot;distance_group_250&quot; 
+## [10] &quot;diversions&quot;          &quot;months&quot;              &quot;ontime&quot;             
+## [13] &quot;ontime_delay_groups&quot; &quot;quarters&quot;            &quot;state_abr_aviation&quot; 
+## [16] &quot;state_fips&quot;          &quot;unique_carriers&quot;     &quot;weekdays&quot;           
+## [19] &quot;world_area_codes&quot;    &quot;yesno_resp&quot;</code></pre>
+<pre class="r"><code>dbGetQuery(db, &quot;SELECT * from ontime limit 10 &quot;)</code></pre>
+<pre><code>## Warning in result_fetch(res@ptr, n = n): Column `CarrierDelay`: mixed type,
+## first seen values of type string, coercing other values of type real</code></pre>
+<pre><code>## Warning in result_fetch(res@ptr, n = n): Column `WeatherDelay`: mixed type,
+## first seen values of type string, coercing other values of type real</code></pre>
+<pre><code>## Warning in result_fetch(res@ptr, n = n): Column `NasDelay`: mixed type,
+## first seen values of type string, coercing other values of type real</code></pre>
+<pre><code>## Warning in result_fetch(res@ptr, n = n): Column `SecurityDelay`: mixed
+## type, first seen values of type string, coercing other values of type real</code></pre>
+<pre><code>## Warning in result_fetch(res@ptr, n = n): Column `LateAircraftDelay`: mixed
+## type, first seen values of type string, coercing other values of type real</code></pre>
+<pre><code>##    Year Quarter Month DayOfMonth DayOfWeek FlightDate Reporting_Airline
+## 1  2018       4    11          1         4 2018-11-01                9E
+## 2  2018       4    11          2         5 2018-11-02                9E
+## 3  2018       4    11          3         6 2018-11-03                9E
+## 4  2018       4    11          4         7 2018-11-04                9E
+## 5  2018       4    11          5         1 2018-11-05                9E
+## 6  2018       4    11          6         2 2018-11-06                9E
+## 7  2018       4    11          7         3 2018-11-07                9E
+## 8  2018       4    11          8         4 2018-11-08                9E
+## 9  2018       4    11          9         5 2018-11-09                9E
+## 10 2018       4    11         11         7 2018-11-11                9E
+##    DOT_ID_Reporting_Airline IATA_CODE_Reporting_Airline Tail_Number
+## 1                     20363                          9E      N834AY
+## 2                     20363                          9E      N834AY
+## 3                     20363                          9E      N8946A
+## 4                     20363                          9E      N326PQ
+## 5                     20363                          9E      N176PQ
+## 6                     20363                          9E      N299PQ
+## 7                     20363                          9E      N341PQ
+## 8                     20363                          9E      N676CA
+## 9                     20363                          9E      N308PQ
+## 10                    20363                          9E      N181PQ
+##    Flight_Number_Reporting_Airline OriginAirportId OriginAirportSeqId
+## 1                             3280           10397            1039707
+## 2                             3280           10397            1039707
+## 3                             3280           10397            1039707
+## 4                             3280           10397            1039707
+## 5                             3280           10397            1039707
+## 6                             3280           10397            1039707
+## 7                             3280           10397            1039707
+## 8                             3280           10397            1039707
+## 9                             3280           10397            1039707
+## 10                            3280           10397            1039707
+##    OriginCityMarketId Origin OriginCityName OriginStateAbr OriginStateFips
+## 1               30397    ATL    Atlanta, GA             GA              13
+## 2               30397    ATL    Atlanta, GA             GA              13
+## 3               30397    ATL    Atlanta, GA             GA              13
+## 4               30397    ATL    Atlanta, GA             GA              13
+## 5               30397    ATL    Atlanta, GA             GA              13
+## 6               30397    ATL    Atlanta, GA             GA              13
+## 7               30397    ATL    Atlanta, GA             GA              13
+## 8               30397    ATL    Atlanta, GA             GA              13
+## 9               30397    ATL    Atlanta, GA             GA              13
+## 10              30397    ATL    Atlanta, GA             GA              13
+##    OriginStateNm OriginWac DestAirportId DestAirportSeqId DestCityMarketId
+## 1        Georgia        34         11617          1161708            31617
+## 2        Georgia        34         11617          1161708            31617
+## 3        Georgia        34         11617          1161708            31617
+## 4        Georgia        34         12197          1219702            31703
+## 5        Georgia        34         12197          1219702            31703
+## 6        Georgia        34         12197          1219702            31703
+## 7        Georgia        34         12197          1219702            31703
+## 8        Georgia        34         12197          1219702            31703
+## 9        Georgia        34         12197          1219702            31703
+## 10       Georgia        34         12197          1219702            31703
+##    Dest                   DestCityName DestStateAbr DestStateFips
+## 1   EWN New Bern/Morehead/Beaufort, NC           NC            37
+## 2   EWN New Bern/Morehead/Beaufort, NC           NC            37
+## 3   EWN New Bern/Morehead/Beaufort, NC           NC            37
+## 4   HPN               White Plains, NY           NY            36
+## 5   HPN               White Plains, NY           NY            36
+## 6   HPN               White Plains, NY           NY            36
+## 7   HPN               White Plains, NY           NY            36
+## 8   HPN               White Plains, NY           NY            36
+## 9   HPN               White Plains, NY           NY            36
+## 10  HPN               White Plains, NY           NY            36
+##       DestStateNm DestWac CrsDepTime DepTime DepDelay DepDelayMinutes
+## 1  North Carolina      36       1957    1952       -5               0
+## 2  North Carolina      36       1957    1954       -3               0
+## 3  North Carolina      36       1957    1945      -12               0
+## 4        New York      22       1827    1825       -2               0
+## 5        New York      22       1827    1827        0               0
+## 6        New York      22       1827    1826       -1               0
+## 7        New York      22       1827    1822       -5               0
+## 8        New York      22       1827    1901       34              34
+## 9        New York      22       1827    1859       32              32
+## 10       New York      22       1827    1820       -7               0
+##    DepDel15 DepDelayGroup DepTimeBlk TaxiOut WheelsOff WheelsOn TaxiIn
+## 1         0            -1  1900-1959      20      2012     2115      4
+## 2         0            -1  1900-1959      16      2010     2111      5
+## 3         0            -1  1900-1959      17      2002     2103      3
+## 4         0            -1  1800-1859      20      1845     2028      5
+## 5         0             0  1800-1859      37      1904     2048      4
+## 6         0            -1  1800-1859      20      1846     2033      8
+## 7         0            -1  1800-1859      13      1835     2022      5
+## 8         1             2  1800-1859      20      1921     2104     11
+## 9         1             2  1800-1859      14      1913     2105      5
+## 10        0            -1  1800-1859      19      1839     2020      4
+##    CrsArrTime ArrTime ArrDelay ArrDelayMinutes ArrDel15 ArrDelayGroup
+## 1        2125    2119       -6               0        0            -1
+## 2        2125    2116       -9               0        0            -1
+## 3        2123    2106      -17               0        0            -2
+## 4        2045    2033      -12               0        0            -1
+## 5        2045    2052        7               7        0             0
+## 6        2045    2041       -4               0        0            -1
+## 7        2045    2027      -18               0        0            -2
+## 8        2045    2115       30              30        1             2
+## 9        2045    2110       25              25        1             1
+## 10       2045    2024      -21               0        0            -2
+##    ArrTimeBlk Cancelled CancellationCode Diverted CrsElapsedTime
+## 1   2100-2159         0                         0             88
+## 2   2100-2159         0                         0             88
+## 3   2100-2159         0                         0             86
+## 4   2000-2059         0                         0            138
+## 5   2000-2059         0                         0            138
+## 6   2000-2059         0                         0            138
+## 7   2000-2059         0                         0            138
+## 8   2000-2059         0                         0            138
+## 9   2000-2059         0                         0            138
+## 10  2000-2059         0                         0            138
+##    ActualElapsedTime AirTime Flights Distance DistanceGroup CarrierDelay
+## 1                 87      63       1      433             2             
+## 2                 82      61       1      433             2             
+## 3                 81      61       1      433             2             
+## 4                128     103       1      780             4             
+## 5                145     104       1      780             4             
+## 6                135     107       1      780             4             
+## 7                125     107       1      780             4             
+## 8                134     103       1      780             4          7.0
+## 9                131     112       1      780             4          0.0
+## 10               124     101       1      780             4             
+##    WeatherDelay NasDelay SecurityDelay LateAircraftDelay FirstDepTime
+## 1                                                                    
+## 2                                                                    
+## 3                                                                    
+## 4                                                                    
+## 5                                                                    
+## 6                                                                    
+## 7                                                                    
+## 8           0.0      0.0           0.0              23.0             
+## 9           0.0      0.0           0.0              25.0             
+## 10                                                                   
+##    TotalAddGtime LongestAddGtime DivAirportLandings DivReachedDest
+## 1                                                 0               
+## 2                                                 0               
+## 3                                                 0               
+## 4                                                 0               
+## 5                                                 0               
+## 6                                                 0               
+## 7                                                 0               
+## 8                                                 0               
+## 9                                                 0               
+## 10                                                0               
+##    DivActualElapsedTime DivArrDelay DivDistance Div1Airport Div1AirportId
+## 1                                                                        
+## 2                                                                        
+## 3                                                                        
+## 4                                                                        
+## 5                                                                        
+## 6                                                                        
+## 7                                                                        
+## 8                                                                        
+## 9                                                                        
+## 10                                                                       
+##    Div1AirportSeqId Div1WheelsOn Div1TotalGtime Div1LongestGtime
+## 1                                                               
+## 2                                                               
+## 3                                                               
+## 4                                                               
+## 5                                                               
+## 6                                                               
+## 7                                                               
+## 8                                                               
+## 9                                                               
+## 10                                                              
+##    Div1WheelsOff Div1TailNum Div2Airport Div2AirportId Div2AirportSeqId
+## 1                                                                      
+## 2                                                                      
+## 3                                                                      
+## 4                                                                      
+## 5                                                                      
+## 6                                                                      
+## 7                                                                      
+## 8                                                                      
+## 9                                                                      
+## 10                                                                     
+##    Div2WheelsOn Div2TotalGtime Div2LongestGtime Div2WheelsOff Div2TailNum
+## 1                                                                        
+## 2                                                                        
+## 3                                                                        
+## 4                                                                        
+## 5                                                                        
+## 6                                                                        
+## 7                                                                        
+## 8                                                                        
+## 9                                                                        
+## 10                                                                       
+##    Div3Airport Div3AirportId Div3AirportSeqId Div3WheelsOn Div3TotalGtime
+## 1                                                                        
+## 2                                                                        
+## 3                                                                        
+## 4                                                                        
+## 5                                                                        
+## 6                                                                        
+## 7                                                                        
+## 8                                                                        
+## 9                                                                        
+## 10                                                                       
+##    Div3LongestGtime Div3WheelsOff Div3TailNum Div4Airport Div4AirportId
+## 1                                                                      
+## 2                                                                      
+## 3                                                                      
+## 4                                                                      
+## 5                                                                      
+## 6                                                                      
+## 7                                                                      
+## 8                                                                      
+## 9                                                                      
+## 10                                                                     
+##    Div4AirportSeqId Div4WheelsOn Div4TotalGtime Div4LongestGtime
+## 1                                                               
+## 2                                                               
+## 3                                                               
+## 4                                                               
+## 5                                                               
+## 6                                                               
+## 7                                                               
+## 8                                                               
+## 9                                                               
+## 10                                                              
+##    Div4WheelsOff Div4TailNum Div5Airport Div5AirportId Div5AirportSeqId
+## 1                                                                      
+## 2                                                                      
+## 3                                                                      
+## 4                                                                      
+## 5                                                                      
+## 6                                                                      
+## 7                                                                      
+## 8                                                                      
+## 9                                                                      
+## 10                                                                     
+##    Div5WheelsOn Div5TotalGtime Div5LongestGtime Div5WheelsOff Div5TailNum
+## 1                                                                        
+## 2                                                                        
+## 3                                                                        
+## 4                                                                        
+## 5                                                                        
+## 6                                                                        
+## 7                                                                        
+## 8                                                                        
+## 9                                                                        
+## 10</code></pre>
+<pre class="r"><code>dbGetQuery(db, &quot;Select a.Description, COUNT(*) from ontime o INNER JOIN cancellation c ON o.Cancellationcode = c.code INNER JOIN airline_id a ON o.DOT_ID_Reporting_Airline = a.Code WHERE c.Description = 'Security'  GROUP BY o.DOT_ID_Reporting_Airline &quot; )</code></pre>
+<pre><code>##                   Description COUNT(*)
+## 1  Southwest Airlines Co.: WN        7
+## 2    Delta Air Lines Inc.: DL       26
+## 3  American Airlines Inc.: AA       61
+## 4    Alaska Airlines Inc.: AS        1
+## 5   United Air Lines Inc.: UA       13
+## 6           Allegiant Air: G4        5
+## 7      Mesa Airlines Inc.: YV        8
+## 8       PSA Airlines Inc.: OH        2
+## 9         JetBlue Airways: B6      140
+## 10       Spirit Air Lines: NK       81
+## 11 Frontier Airlines Inc.: F9       12
+## 12       Republic Airline: YX        1
+## 13         Virgin America: VX        6</code></pre>
+<pre class="r"><code>dbGetQuery(db, &quot;Select a.Description, COUNT(*) from ontime o INNER JOIN airline_id a ON  o.DOT_ID_Reporting_Airline = a.Code WHERE Diverted = 1 GROUP BY DOT_ID_Reporting_Airline&quot; )</code></pre>
+<pre><code>##                     Description COUNT(*)
+## 1    Southwest Airlines Co.: WN     4918
+## 2    Hawaiian Airlines Inc.: HA      176
+## 3      Delta Air Lines Inc.: DL     3663
+## 4    American Airlines Inc.: AA     4173
+## 5      Alaska Airlines Inc.: AS     1021
+## 6     United Air Lines Inc.: UA     2928
+## 7     SkyWest Airlines Inc.: OO     4464
+## 8         Endeavor Air Inc.: 9E      505
+## 9  ExpressJet Airlines Inc.: EV     1595
+## 10            Allegiant Air: G4      234
+## 11       Mesa Airlines Inc.: YV      474
+## 12        PSA Airlines Inc.: OH      751
+## 13                Envoy Air: MQ      774
+## 14          JetBlue Airways: B6     1471
+## 15         Spirit Air Lines: NK      503
+## 16   Frontier Airlines Inc.: F9      319
+## 17         Republic Airline: YX      678
+## 18           Virgin America: VX      326</code></pre>
+<pre class="r"><code>dbGetQuery(db, &quot;Select a.Description, COUNT(*), odl.Description from ontime o INNER JOIN ontime_delay_groups odl ON o.DepDelay = odl.Code INNER JOIN airline_id a ON  o.DOT_ID_Reporting_Airline = a.Code WHERE odl.code in (-1,-2) GROUP BY DOT_ID_Reporting_Airline &quot; )</code></pre>
+<pre><code>##                     Description COUNT(*)                   Description..3
+## 1    Southwest Airlines Co.: WN   415953              Delay &lt; -15 minutes
+## 2    Hawaiian Airlines Inc.: HA    16747              Delay &lt; -15 minutes
+## 3      Delta Air Lines Inc.: DL   324051 Delay between -15 and -1 minutes
+## 4    American Airlines Inc.: AA   214309 Delay between -15 and -1 minutes
+## 5      Alaska Airlines Inc.: AS    33019              Delay &lt; -15 minutes
+## 6     United Air Lines Inc.: UA   141714              Delay &lt; -15 minutes
+## 7     SkyWest Airlines Inc.: OO   139457              Delay &lt; -15 minutes
+## 8         Endeavor Air Inc.: 9E    20041              Delay &lt; -15 minutes
+## 9  ExpressJet Airlines Inc.: EV    45239 Delay between -15 and -1 minutes
+## 10            Allegiant Air: G4     7066 Delay between -15 and -1 minutes
+## 11       Mesa Airlines Inc.: YV    24560              Delay &lt; -15 minutes
+## 12        PSA Airlines Inc.: OH    30459              Delay &lt; -15 minutes
+## 13                Envoy Air: MQ    30663              Delay &lt; -15 minutes
+## 14          JetBlue Airways: B6    41594 Delay between -15 and -1 minutes
+## 15         Spirit Air Lines: NK    30096 Delay between -15 and -1 minutes
+## 16   Frontier Airlines Inc.: F9    18010              Delay &lt; -15 minutes
+## 17         Republic Airline: YX    29206 Delay between -15 and -1 minutes
+## 18           Virgin America: VX     8076              Delay &lt; -15 minutes</code></pre>
+<pre class="r"><code>dbGetQuery(db, &quot;Select a.Description, COUNT(*), odl.Description from ontime o INNER JOIN ontime_delay_groups odl ON o.ArrDelay = odl.Code INNER JOIN airline_id a ON  o.DOT_ID_Reporting_Airline = a.Code WHERE odl.code in (-1,-2) GROUP BY DOT_ID_Reporting_Airline &quot; )</code></pre>
+<pre><code>##                     Description COUNT(*)                   Description..3
+## 1    Southwest Airlines Co.: WN   134155              Delay &lt; -15 minutes
+## 2    Hawaiian Airlines Inc.: HA    13796 Delay between -15 and -1 minutes
+## 3      Delta Air Lines Inc.: DL    71206              Delay &lt; -15 minutes
+## 4    American Airlines Inc.: AA    75198              Delay &lt; -15 minutes
+## 5      Alaska Airlines Inc.: AS    18692 Delay between -15 and -1 minutes
+## 6     United Air Lines Inc.: UA    43393              Delay &lt; -15 minutes
+## 7     SkyWest Airlines Inc.: OO    61632 Delay between -15 and -1 minutes
+## 8         Endeavor Air Inc.: 9E     7436              Delay &lt; -15 minutes
+## 9  ExpressJet Airlines Inc.: EV    18374              Delay &lt; -15 minutes
+## 10            Allegiant Air: G4     3766              Delay &lt; -15 minutes
+## 11       Mesa Airlines Inc.: YV     9227              Delay &lt; -15 minutes
+## 12        PSA Airlines Inc.: OH    12065              Delay &lt; -15 minutes
+## 13                Envoy Air: MQ    11534              Delay &lt; -15 minutes
+## 14          JetBlue Airways: B6    18680              Delay &lt; -15 minutes
+## 15         Spirit Air Lines: NK    12178              Delay &lt; -15 minutes
+## 16   Frontier Airlines Inc.: F9     7384 Delay between -15 and -1 minutes
+## 17         Republic Airline: YX    10156              Delay &lt; -15 minutes
+## 18           Virgin America: VX     3594 Delay between -15 and -1 minutes</code></pre>
 </div>
+</div>
+<div id="query-6" class="section level3">
+<h3>Query #6</h3>
+<p>¿Cuál es la probabilidad de que un vuelo de cierta aerolínea llegue retrasado? <br /> Para esta pregunta se tiene que hacer una serie de pasos: 1. Obtener las las aerolineas que tuvieron algun retraso al salir. <br /> 2. De las aerolineas obtenidas observar el numero de vuelos retrasados versus el numero de vuelos realizados en total. <br /> 3. Presentar el porcentaje de retraso en un nueva columna asociada con el nombre de la aereolinea. <br /></p>
+<pre class="r"><code>sql &lt;- paste0(&quot;
+SELECT o1.DOT_ID_Reporting_Airline, late , count(*) as total
+FROM (ontime o INNER JOIN airline_id a ON  o.DOT_ID_Reporting_Airline = a.Code)   AS o1 JOIN (    
+  SELECT DOT_ID_Reporting_Airline, count(*) as late
+  FROM ontime o INNER JOIN airline_id a ON  o.DOT_ID_Reporting_Airline = a.Code
+  WHERE (DepDelayMinutes &gt; 5)
+  GROUP BY DOT_ID_Reporting_Airline) AS o2 ON o1.DOT_ID_Reporting_Airline = o2.DOT_ID_Reporting_Airline
+GROUP BY o1.DOT_ID_Reporting_Airline
+LIMIT 5 
+  &quot;)
+res &lt;- dbSendQuery(db, sql)
+as.data.frame(dbFetch(res))</code></pre>
+<pre><code>##   DOT_ID_Reporting_Airline   late   total
+## 1                    19393 925198 2588372
+## 2                    19690  25318  157488
+## 3                    19790 413765 1811590
+## 4                    19805 453494 1748036
+## 5                    19930  83661  412033</code></pre>
+</div>
+<div id="query-7" class="section level3">
+<h3>Query #7</h3>
+<p>¿Cuál es la aerolínea que más millas ha volado? <br /> Para esta pregunta se tiene que hacer una serie de pasos: <br /> 1. Agrupar por aerolinea. <br /> 2. Hacer una sumatoria del campo ‘Distance’. <br /> 3. Renombrar el campo para que sea legible. <br /> 4. Ordenar en orde descendiente ya que se quiere saber cuales son las mas recorridas. <br /></p>
+<pre class="r"><code>sql &lt;- paste0(&quot;
+    SELECT Description, SUM(Distance) AS recorridoTotal
+    FROM ontime o INNER JOIN airline_id a ON  o.DOT_ID_Reporting_Airline = a.Code
+    GROUP BY DOT_ID_Reporting_Airline
+    ORDER BY recorridoTotal DESC
+    LIMIT 5
+        &quot;)
+res &lt;- dbSendQuery(db, sql)
+as.data.frame(dbFetch(res))</code></pre>
+<pre><code>##                  Description recorridoTotal
+## 1 Southwest Airlines Co.: WN     1934648427
+## 2 American Airlines Inc.: AA     1785436382
+## 3   Delta Air Lines Inc.: DL     1592630466
+## 4  United Air Lines Inc.: UA     1378374942
+## 5  SkyWest Airlines Inc.: OO      675506570</code></pre>
+</div>
+<div id="query-8" class="section level3">
+<h3>Query #8</h3>
+<p>¿Cual es la que tiene menor reporte de accidentes? <br /> Para esta pregunta se tiene que hacer una serie de pasos: <br /> 1. Obtener el numero de vuelos con restraso menor a 0. <br /> 2. Agrupar por aerolinea. <br /> 3. Dividir en SELECT los positivos versus los negativos. <br /></p>
+<pre class="r"><code>sql &lt;- paste0(&quot;
+    SELECT DOT_ID_Reporting_Airline, ArrDelayMinutes
+    FROM ontime o INNER JOIN airline_id a ON  o.DOT_ID_Reporting_Airline = a.Code
+    WHERE (ArrDelayMinutes &gt; 10)&quot;)
+
+sql &lt;- paste0(&quot;
+    SELECT *
+    FROM cancellation&quot;)
+
+res &lt;- dbSendQuery(db, sql)
+as.data.frame(dbFetch(res))</code></pre>
+<pre><code>##   Code         Description
+## 1    A             Carrier
+## 2    B             Weather
+## 3    C National Air System
+## 4    D            Security</code></pre>
+</div>
+<div id="query-9" class="section level3">
+<h3>Query #9</h3>
+<p>¿Qué aerolínea sale los fines de semana? <br /> Para esta pregunta se tiene que hacer una serie de pasos: <br /> 1. Obtener que aerolineas tienen codigo que que sea tanto de viernes, sabado o domingo. <br /> 2. Hacer un merge Agrupar por aerolinea. <br /> 3. Dividir en SELECT los positivos versus los negativos. <br /></p>
+<pre class="r"><code>sql &lt;- paste0(&quot;
+  SELECT DISTINCT a.Description
+  FROM (
+    SELECT DOT_ID_Reporting_Airline , DayOfWeek
+    FROM ontime
+    WHERE (DayOfWeek = 6 OR DayOfWeek = 7)) o INNER JOIN airline_id a ON o.DOT_ID_Reporting_Airline = a.Code
+  LIMIT 5
+&quot;)
+res &lt;- dbSendQuery(db, sql)
+as.data.frame(dbFetch(res))</code></pre>
+<pre><code>##                    Description
+## 1        Endeavor Air Inc.: 9E
+## 2   American Airlines Inc.: AA
+## 3          JetBlue Airways: B6
+## 4 ExpressJet Airlines Inc.: EV
+## 5     Alaska Airlines Inc.: AS</code></pre>
+</div>
+<div id="query-11" class="section level3">
+<h3>Query #11</h3>
+<p>¿qué día es donde se reportan más vuelos por aerolínea más óptima? Para esta pregunta se tiene que hacer una serie de pasos: <br /> 1. Agrupar los vuelos por aereoliea y por dia de la semana. <br /> 2. Agrupar por aerolinea. <br /> 3. Dividir en SELECT los positivos versus los negativos. <br /></p>
+<pre class="r"><code>sql &lt;- paste0(&quot;
+    SELECT Description, count(*) AS `vuelos`, DayOfWeek
+    FROM ontime o INNER JOIN airline_id a ON  o.DOT_ID_Reporting_Airline = a.Code
+    GROUP BY DOT_ID_Reporting_Airline
+    LIMIT 5
+    &quot;)
+
+res &lt;- dbSendQuery(db, sql)
+as.data.frame(dbFetch(res))</code></pre>
+<pre><code>##                  Description  vuelos DayOfWeek
+## 1 Southwest Airlines Co.: WN 2588372         7
+## 2 Hawaiian Airlines Inc.: HA  157488         2
+## 3   Delta Air Lines Inc.: DL 1811590         5
+## 4 American Airlines Inc.: AA 1748036         2
+## 5   Alaska Airlines Inc.: AS  412033         2</code></pre>
 </div>
 </div>
 
